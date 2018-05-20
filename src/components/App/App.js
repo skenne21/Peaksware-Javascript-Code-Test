@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 // import  { covertTime } from './cleaner';
-import MapContainer from './MapContainer/';
+import MapContainer from '../MapContainer/';
+import GraphContainer from '../GraphContainer/';
 import { GoogleApiWrapper } from 'google-maps-react';
-import { googleMapApiKey } from './apiKey.js';
+import { googleMapApiKey } from '../../apiKey.js';
 import PropTypes from 'prop-types';
-const  workoutData = require('./cleaners/workout-data.json');
+const  workoutData = require('../../cleaners/workout-data.json');
 
 
 
@@ -28,6 +29,7 @@ class App extends Component {
         <MapContainer 
           google={this.props.google}
         />
+        <GraphContainer />
       </div>
     );
   }

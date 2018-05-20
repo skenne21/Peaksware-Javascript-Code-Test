@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import './styles.css';
 
 
 
@@ -57,8 +58,8 @@ class MapContainer extends Component {
 
   render() {
     const style = { 
-      width: '90vw', 
-      height: '75vh' 
+      width: '80vw', 
+      height: '65vh' 
     };
 
     return ( 
