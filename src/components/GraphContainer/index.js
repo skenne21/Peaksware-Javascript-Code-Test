@@ -17,11 +17,14 @@ const GraphContainer = () => {
       <VictoryChart
         theme={VictoryTheme.material}
         domainPadding={20}
+        // style={{ parent: { width: "100%" },  margin: 'auto'}}
       >
         <VictoryBar 
           data={data}
           x="time"
           y="power"
+          // size={5}
+          // width={"100%"}
         />
       </VictoryChart>
       

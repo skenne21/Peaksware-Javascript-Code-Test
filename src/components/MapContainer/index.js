@@ -59,11 +59,12 @@ class MapContainer extends Component {
   render() {
     const style = { 
       width: '80vw', 
-      height: '65vh' 
+      height: '65vh', 
+      margin: '1em auto' 
     };
-
+    
     return ( 
-      <div ref="map" style={style}>
+      <div ref="map" class='MapContainer' style={style}>
         loading map...
       </div>
     );
