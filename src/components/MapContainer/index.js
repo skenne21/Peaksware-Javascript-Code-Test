@@ -3,60 +3,44 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import './styles.css';
 
-
-
 class MapContainer extends Component {
-  constructor({}) {
-    super();
-    this.state = { gps:[
-      { lat: 40.01488, lng: -105.131 }, 
-      { lat: 40.01503, lng: -105.13099 },
-      { lat: 40.01511, lng: -105.13099 },
-      { lat: 40.01518, lng: -105.13099 },
-      { lat: 40.01525, lng: -105.13099 },
-      { lat: 40.01532, lng: -105.13099 },
-      { lat: 40.0154,  lng: -105.13098 },
-      { lat: 40.01674, lng: -105.13099 }, 
-      { lat: 40.01752, lng: -105.131 },
-      { lat: 40.01897, lng: -105.13098 },
-      { lat: 40.02222, lng: -105.13098 }
-    ]};
-  }
-
   componentDidMount() {
     this.loadMap(); 
   }
 
+  componentDidUpdate() {
+    this.loadMap()
+  }
+
   loadMap() {
     if (this.props && this.props.google) { 
-      const { google } = this.props;
+      const { google, gps } = this.props;
       const maps = google.maps; 
       const mapRef = this.refs.map; 
       const node = ReactDOM.findDOMNode(mapRef); 
       const mapCoordinates = {
         center: { lat: 40.01488, lng: -105.131  }, 
-        zoom: 11, 
+        zoom: 12, 
         mapTypeId: 'roadmap'
       };
 
-      const polgon = new google.maps.Polygon({
-        paths: this.state.gps,
-        // draggable: true, // turn off if it gets annoying
-        // editable: true,
+      const gpsCorrdinates = new google.maps.Polyline({
+        path: gps,
+        fillOpacity: 0.35,
+        geodesic: true,
         strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        // fillColor: '#FF0000',
-        fillOpacity: 0.35
+        strokeOpacity: 1.0,
+        strokeWeight: 2
       });
 
       const mapConfig = Object.assign({}, mapCoordinates);
       this.map = new maps.Map(node, mapConfig);
-      polgon.setMap(this.map);
+      gpsCorrdinates.setMap(this.map);
     }
   }
 
   render() {
+    console.log(this.props.gps)
     const style = { 
       width: '80vw', 
       height: '65vh', 
@@ -72,7 +56,8 @@ class MapContainer extends Component {
 }
 
 MapContainer.propTypes = {
-  google: PropTypes.object
+  google: PropTypes.object,
+  gps: PropTypes.array
 };
 
 export default MapContainer;

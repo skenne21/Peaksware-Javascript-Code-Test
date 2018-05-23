@@ -3,7 +3,9 @@ import './App.css';
 import  { 
   spiltIntoTwentyMins,
   findBest,
-  timeSegments 
+  timeSegments,
+  gpsRoute,
+  performanceData
 } from '../../cleaners/workoutDataCleaner';
 import MapContainer from '../MapContainer/';
 import GraphContainer from '../GraphContainer/';
@@ -17,14 +19,22 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      topPerformance: []
+      topPerformance: [],
+      gps: [],
+      output: []
     }
   }
 
  getData = () => {
+    const gps = gpsRoute(workoutData.samples);
     const segments = spiltIntoTwentyMins(workoutData.samples)
     const topPerformance = findBest(timeSegments);
-    this.setState({ topPerformance })  
+    const output = performanceData(topPerformance)
+    this.setState({ 
+      topPerformance, 
+      gps,
+      output 
+    });
   }
 
   componentDidMount () {
@@ -33,21 +43,19 @@ class App extends Component {
   }
 
   render() {
-    const { bestPerformance } = this.state;
+    const { topPerformance, gps, output } = this.state;
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Welcome to Fitness Tracker</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
         <MapContainer 
           google={ this.props.google }
-          topPerformance={ topPerformance }
+          gps={ gps }
         />
         <GraphContainer
           topPerformance={ topPerformance }
+          output={ output } 
         />
       </div>
     );
@@ -56,7 +64,7 @@ class App extends Component {
 
 App.propTypes = {
   google: PropTypes.object,
-  bestPerformance: PropTypes.array
+  topPerformance: PropTypes.array
 };
 
 export default  GoogleApiWrapper({ apiKey: googleMapApiKey})(App) ;

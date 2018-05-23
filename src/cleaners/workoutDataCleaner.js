@@ -3,8 +3,7 @@ export const timeSegments = [];
 export const spiltIntoTwentyMins = (workoutData) => {
   const secondsPast = 1200000;
   let twentyMinChuncks;
-  
-  
+
   const session = workoutData.filter( (session,index) => {
     let timePast = session.millisecondOffset;
     if (timePast === secondsPast) {
@@ -47,7 +46,6 @@ export const findBest = timeSegments => {
     });
   });
 
-
   const topPerformance = timeSegments.reduce((best20, interval, index) => {
     interval.forEach( second => {
       let power = second.values.power      
@@ -61,8 +59,37 @@ export const findBest = timeSegments => {
   return topPerformance;
 }
 
-export const latLongForPerformance = topPerformance => {
-  
+export const gpsRoute = workoutData => {
+  const startPoint = workoutData.slice(5, workoutData.length);
+  const gps = startPoint.map((second, index, array) => {
+    let lat = second.values.positionLat;
+    let lng = second.values.positionLong;
+
+    if (lat === undefined || lng === undefined) {
+      lat = array[index-1].values.positionLat;
+      lng = array[index-1].values.positionLong;
+    }
+
+    return {
+      lat,
+      lng
+    }
+  });
+  console.log(gps)
+  return gps;
+}
+
+export const performanceData = topPerformance => {
+
+  const output = topPerformance.map(second => {
+    let seconds = second.millisecondOffset / 1000 / 60;
+    return {
+      time: seconds,
+      power: second.values.power
+    }
+  }); 
+
+  return output;
 }
 
 
