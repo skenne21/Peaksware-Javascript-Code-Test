@@ -75,12 +75,10 @@ export const gpsRoute = workoutData => {
       lng
     }
   });
-  console.log(gps)
   return gps;
 }
 
 export const performanceData = topPerformance => {
-
   const output = topPerformance.map(second => {
     let seconds = second.millisecondOffset / 1000 / 60;
     return {

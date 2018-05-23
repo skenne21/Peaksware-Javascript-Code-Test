@@ -12,6 +12,7 @@ import GraphContainer from '../GraphContainer/';
 import { GoogleApiWrapper } from 'google-maps-react';
 import { googleMapApiKey } from '../../apiKey.js';
 import PropTypes from 'prop-types';
+import  TimeLabels from '../TimeLabels/';
 const  workoutData = require('../../cleaners/workout-data.json');
 
 
@@ -37,6 +38,10 @@ class App extends Component {
     });
   }
 
+  getTimeParams = (timeParams) => {
+    console.log(timeParams)
+  }
+
   componentDidMount () {
     this.getData()
 
@@ -57,6 +62,8 @@ class App extends Component {
           topPerformance={ topPerformance }
           output={ output } 
         />
+        <TimeLabels 
+          controlFunc={ this.getTimeParams }/>
       </div>
     );
   }
