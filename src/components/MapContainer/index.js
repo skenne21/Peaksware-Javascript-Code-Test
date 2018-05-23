@@ -6,7 +6,7 @@ import './styles.css';
 
 
 class MapContainer extends Component {
-  constructor() {
+  constructor({}) {
     super();
     this.state = { gps:[
       { lat: 40.01488, lng: -105.131 }, 
@@ -64,7 +64,7 @@ class MapContainer extends Component {
     };
     
     return ( 
-      <div ref="map" class='MapContainer' style={style}>
+      <div ref="map" className='MapContainer' style={style}>
         loading map...
       </div>
     );

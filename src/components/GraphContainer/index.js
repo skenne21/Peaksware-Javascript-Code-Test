@@ -4,7 +4,7 @@ import './styles.css';
 
 import { VictoryBar, VictoryChart,  VictoryTheme } from 'victory';
 
-const GraphContainer = () => {
+const GraphContainer = ({ bestPerformance }) => {
   const data = [
     {time: 1, power: 13000},
     {time: 2, power: 16500},

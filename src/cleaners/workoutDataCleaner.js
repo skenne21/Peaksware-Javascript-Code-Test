@@ -1,43 +1,70 @@
+export const timeSegments = [];
+
+export const spiltIntoTwentyMins = (workoutData) => {
+  const secondsPast = 1200000;
+  let twentyMinChuncks;
+  
+  
+  const session = workoutData.filter( (session,index) => {
+    let timePast = session.millisecondOffset;
+    if (timePast === secondsPast) {
+      session.index = index + 1;
+      return session;
+    }
+  });
+
+  twentyMinChuncks = workoutData.splice(0, session[0].index) 
+  
+  timeSegments.push(twentyMinChuncks);
+
+  if (workoutData[0].millisecondOffset >= secondsPast) {
+    workoutData.forEach( session => {
+      let milliseconds = session.millisecondOffset
+      session.millisecondOffset = milliseconds - secondsPast;
+    });
+  }
+  
+  if(workoutData.length <= 216 ) {
+    const remainder = workoutData.splice(0, workoutData.length)
+    timeSegments.push(remainder);
+    return timeSegments;
+  }
+
+  spiltIntoTwentyMins(workoutData);
+
+}
 
 
-// findBest(samples, 20)
+export const findBest = timeSegments => {
+  let highestPower = 0;
 
-// export const covertTime = (workoutData, timeParams) => {
-//   const timeBlocks = [];
-//   const totalMill = 60000 * timeParams
-//   for ( let i = 0; i < workoutData.length; i++) {
-//     for( let j = 1; j < workoutData.length - totalMill ; j++) {
-//       let session = workoutData[i];
-//       let nextSession = workoutData[j];
-//       let power = 0;
-//     // while (session.millisecondOffset + nextSession.millisecondOffset === totalMill) {
-
-//     }
-//     //   let mintues = Math.floor(session.millisecondOffset / 60000)
-//     //   session.millisecondOffset = mintues
-//     // // console.log(session)
-//     // // console.log(session)
-//     // // console.log(timeParams)
-//     // if (session.millisecondOffset <= timeParams) {
-//     //   let time = session.millisecondOffset + nextSession.millisecondOffset
-//     //   while( session.millisecondOffset + nextSession.millisecondOffset !== timeParams && time !== 20) {
-//     //     let time = session.millisecondOffset + nextSession.millisecondOffset;
-//     //     timeBlocks.push(session, nextSession);
-//     //   }
-//     // }
-
-//         // console.log(timeBlocks)
-//     // if (session.mintues > timeParams) {
-//     //   console.log(session.mintues / timeParams)
-//     // }
-//     }
-    
-    
-
-//   }
+  timeSegments.forEach(intervals => {
+    intervals.forEach( second => {
+      let power = second.values.power
+      if (power > highestPower) {
+        highestPower = power;
+      } 
+    });
+  });
 
 
+  const topPerformance = timeSegments.reduce((best20, interval, index) => {
+    interval.forEach( second => {
+      let power = second.values.power      
+      if (second.values.power === highestPower) {
+        best20.push(...interval);
+      }
+    }); 
+    return best20;
+  }, []);
 
-// need to loop through array to convert time into milliseconds
+  return topPerformance;
+}
+
+export const latLongForPerformance = topPerformance => {
+  
+}
+
+
 
 
