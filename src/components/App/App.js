@@ -21,25 +21,19 @@ class App extends Component {
     }
   }
 
-  getData = () => {
-    const { data } = this.state
-    const exerciseData = data.slice(0, data.length);
-    const analysisData = new AnalysisData(1200000, 1200);
-    const segments = analysisData.spiltIntoTwentyMins(exerciseData);
-    const gps = analysisData.gpsRoute(data);
-    const topPerformance = analysisData.findBest(analysisData.timeSegments);
-    const output = analysisData.performanceData(topPerformance)
-    this.resetState(topPerformance, gps, output)
-  }
-
-  getTimeParams = (timeParams) => {
-    const { data } = this.state;
+  createData = (data, timeParams) => {
     const exerciseData = data.slice(0, data.length);
     const analysisData = new AnalysisData(timeParams.mill, timeParams.second);
     const segments = analysisData.spiltIntoTwentyMins(exerciseData);
+    return analysisData;
+  }
+
+  getData = (timeParams) => {
+    const { data } = this.state
+    const analysisData = this.createData(data, timeParams);
+    const gps = analysisData.gpsRoute(data);
     const topPerformance = analysisData.findBest(analysisData.timeSegments);
-    const output = analysisData.performanceData(topPerformance);
-    const gps = analysisData.gpsRoute(topPerformance);
+    const output = analysisData.performanceData(topPerformance)
     this.resetState(topPerformance, gps, output)
   }
 
@@ -52,7 +46,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this.getData()
+    this.getData({mill: 1200000, second: 1200})
   }
 
   render() {
@@ -70,7 +64,7 @@ class App extends Component {
           output={ output } 
         />
         <TimeLabels 
-          controlFunc={ this.getTimeParams }/>
+          controlFunc={ this.getData }/>
       </div>
     );
   }
