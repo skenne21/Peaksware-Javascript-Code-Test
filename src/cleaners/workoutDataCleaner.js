@@ -1,10 +1,14 @@
 export const timeSegments = [];
 
-export const spiltIntoTwentyMins = (workoutData) => {
-  const secondsPast = 1200000;
+export const spiltIntoTwentyMins = (workoutData, timeParams) => {
+  // console.log('length', workoutData.length)
+  console.log('times', timeParams)
+  console.log('workoutData', workoutData)
+  const secondsPast = timeParams;
   let twentyMinChuncks;
-
+  // console.log(secondsPast)
   const session = workoutData.filter( (session,index) => {
+
     let timePast = session.millisecondOffset;
     if (timePast === secondsPast) {
       session.index = index + 1;
@@ -26,6 +30,7 @@ export const spiltIntoTwentyMins = (workoutData) => {
   if(workoutData.length <= 216 ) {
     const remainder = workoutData.splice(0, workoutData.length)
     timeSegments.push(remainder);
+    console.log(timeSegments)
     return timeSegments;
   }
 

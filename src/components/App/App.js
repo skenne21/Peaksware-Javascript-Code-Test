@@ -22,13 +22,16 @@ class App extends Component {
     this.state = {
       topPerformance: [],
       gps: [],
-      output: []
+      output: [],
+      data: workoutData.samples
     }
   }
 
  getData = () => {
+    const { data } = this.state
+    const exerciseData = data.slice(0, data.length)
+    const segments = spiltIntoTwentyMins(exerciseData, 1200000)
     const gps = gpsRoute(workoutData.samples);
-    const segments = spiltIntoTwentyMins(workoutData.samples)
     const topPerformance = findBest(timeSegments);
     const output = performanceData(topPerformance)
     this.setState({ 
@@ -38,13 +41,19 @@ class App extends Component {
     });
   }
 
+
   getTimeParams = (timeParams) => {
-    console.log(timeParams)
+    const { data } = this.state
+    const exerciseData = data.slice(0, data.length)
+    console.log(exerciseData)
+    const segments = spiltIntoTwentyMins(exerciseData, timeParams)
+    // console.log(timeSegments)
+    // const topPerformance = findBest(timeSegments);
+    // console.log(timeParams)
   }
 
   componentDidMount () {
     this.getData()
-
   }
 
   render() {
