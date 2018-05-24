@@ -6,7 +6,7 @@ import GraphContainer from '../GraphContainer/';
 import { GoogleApiWrapper } from 'google-maps-react';
 import { googleMapApiKey } from '../../apiKey.js';
 import PropTypes from 'prop-types';
-import  TimeLabels from '../TimeLabels/';
+import TimeLabels from '../TimeLabels/';
 const  workoutData = require('../../cleaners/workout-data.json');
 
 class App extends Component {

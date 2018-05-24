@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './styles.css';
 
 const Button = ({ controlFunc, value, name }) => {
   return(
-    <div>
+    <div className='Button'>
       <button
         onClick={(event) => controlFunc(value)}
       >

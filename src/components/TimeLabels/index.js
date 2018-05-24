@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 const TimeLabels = ({ controlFunc }) => {
   return (
     <div>
+      <h2>CLICK TO VIEW BEST EFFORTS</h2>
       <Button
         controlFunc={ controlFunc }
         value={{mill:60000, second:60, onLoad:true}}
