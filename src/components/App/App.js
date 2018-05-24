@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import  { 
-  spiltIntoTwentyMins,
-  findBest,
-  timeSegments,
-  gpsRoute,
-  performanceData
-} from '../../cleaners/workoutDataCleaner';
+import AnalysisData from '../../cleaners/workoutDataCleaner';
 import MapContainer from '../MapContainer/';
 import GraphContainer from '../GraphContainer/';
 import { GoogleApiWrapper } from 'google-maps-react';
@@ -29,11 +23,12 @@ class App extends Component {
 
  getData = () => {
     const { data } = this.state
-    const exerciseData = data.slice(0, data.length)
-    const segments = spiltIntoTwentyMins(exerciseData, 1200000)
-    const gps = gpsRoute(workoutData.samples);
-    const topPerformance = findBest(timeSegments);
-    const output = performanceData(topPerformance)
+    const exerciseData = data.slice(0, data.length);
+    const analysisData = new AnalysisData(1200000);
+    const segments = analysisData.spiltIntoTwentyMins(exerciseData);
+    const gps = analysisData.gpsRoute(data);
+    const topPerformance = analysisData.findBest(analysisData.timeSegments);
+    const output = analysisData.performanceData(topPerformance)
     this.setState({ 
       topPerformance, 
       gps,
@@ -43,10 +38,11 @@ class App extends Component {
 
 
   getTimeParams = (timeParams) => {
-    const { data } = this.state
-    const exerciseData = data.slice(0, data.length)
+    const { data } = this.state;
+    const exerciseData = data.slice(0, data.length);
+
     console.log(exerciseData)
-    const segments = spiltIntoTwentyMins(exerciseData, timeParams)
+    // const segments = spiltIntoTwentyMins(exerciseData, timeParams)
     // console.log(timeSegments)
     // const topPerformance = findBest(timeSegments);
     // console.log(timeParams)
