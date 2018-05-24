@@ -33,7 +33,6 @@ class App extends Component {
   }
 
   determineTime = (name, topPerformance) => {
-    console.log(this.state[name])
     if (!this.state[name].length) {
       this.setState({ [name]: topPerformance });
     }

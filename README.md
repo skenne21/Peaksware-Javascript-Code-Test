@@ -17,3 +17,17 @@ The purpose of this test is to demonstrate your understanding of JavaScript web 
 
 ## Submission
 Please submit your test as an emailed zip file (please do not include the node_modules folder) or link to a private repo or private file sharing system. You can also provide a hosted link or it can run locally.
+
+#### Thank you 
+
+Thank you for the opportunity with this challenge, it was a fun task to undertake and really challenge. It was fun to be able to learn and work with the Google-map-react and Victory library for the first time to make this application work. 
+
+![screenshot]('./homescreen.png')
+[GitHub Repo](https://github.com/skenne21/Peaksware-Javascript-Code-Test)
+
+I Hope I hear from you,
+
+
+Sabrina Kennedy  
+303-854-7624
+skenne21@gmail.com
