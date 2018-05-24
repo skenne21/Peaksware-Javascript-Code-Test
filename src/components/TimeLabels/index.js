@@ -6,27 +6,27 @@ const TimeLabels = ({ controlFunc }) => {
     <div>
       <Button
         controlFunc={ controlFunc }
-        value={ 60000 }
+        value={{mill:60000, second:60}}
         name={'ONE'}
       />
       <Button
         controlFunc={ controlFunc }
-        value={ 300000 }
+        value={{mill:300000, second:300}}
         name={'FIVE'}
       />
       <Button
         controlFunc={ controlFunc }
-        value={ 600000 }
+        value={{mill:600000 , second:600}}
         name={'TEN'}
       />
       <Button
         controlFunc={ controlFunc }
-        value={ 900000 }
+        value={{mill:900000 , second:900}}
         name={'FIFTHTEEN'}
       />
       <Button
         controlFunc={ controlFunc }
-        value={ 1200000 }
+        value={{mill:1200000 , second:1200}}
         name={'TWENTY'}
       />
     </div>

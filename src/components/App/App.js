@@ -21,31 +21,34 @@ class App extends Component {
     }
   }
 
- getData = () => {
+  getData = () => {
     const { data } = this.state
     const exerciseData = data.slice(0, data.length);
-    const analysisData = new AnalysisData(1200000);
+    const analysisData = new AnalysisData(1200000, 1200);
     const segments = analysisData.spiltIntoTwentyMins(exerciseData);
     const gps = analysisData.gpsRoute(data);
     const topPerformance = analysisData.findBest(analysisData.timeSegments);
     const output = analysisData.performanceData(topPerformance)
+    this.resetState(topPerformance, gps, output)
+  }
+
+  getTimeParams = (timeParams) => {
+    const { data } = this.state;
+    const exerciseData = data.slice(0, data.length);
+    const analysisData = new AnalysisData(timeParams.mill, timeParams.second);
+    const segments = analysisData.spiltIntoTwentyMins(exerciseData);
+    const topPerformance = analysisData.findBest(analysisData.timeSegments);
+    const output = analysisData.performanceData(topPerformance);
+    const gps = analysisData.gpsRoute(topPerformance);
+    this.resetState(topPerformance, gps, output)
+  }
+
+  resetState(topPerformance, gps, output) {
     this.setState({ 
       topPerformance, 
       gps,
       output 
     });
-  }
-
-
-  getTimeParams = (timeParams) => {
-    const { data } = this.state;
-    const exerciseData = data.slice(0, data.length);
-
-    console.log(exerciseData)
-    // const segments = spiltIntoTwentyMins(exerciseData, timeParams)
-    // console.log(timeSegments)
-    // const topPerformance = findBest(timeSegments);
-    // console.log(timeParams)
   }
 
   componentDidMount () {
@@ -64,7 +67,6 @@ class App extends Component {
           gps={ gps }
         />
         <GraphContainer
-          topPerformance={ topPerformance }
           output={ output } 
         />
         <TimeLabels 
