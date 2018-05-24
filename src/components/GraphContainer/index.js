@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './styles.css';
 import { VictoryBar, VictoryChart,  VictoryTheme, VictoryLabel } from 'victory';
 
-const GraphContainer = ({ topPerformance, output }) => {
+const GraphContainer = ({ output }) => {
   return (
     <div className='GraphContainer'>
       <VictoryChart

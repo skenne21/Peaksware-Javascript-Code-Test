@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import './styles.css';
 
 class MapContainer extends Component {
   componentDidMount() {
@@ -9,7 +8,7 @@ class MapContainer extends Component {
   }
 
   componentDidUpdate() {
-    this.loadMap()
+    this.loadMap();
   }
 
   loadMap() {
@@ -40,7 +39,6 @@ class MapContainer extends Component {
   }
 
   render() {
-    console.log(this.props.gps)
     const style = { 
       width: '80vw', 
       height: '65vh', 
