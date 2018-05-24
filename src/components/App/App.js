@@ -17,6 +17,11 @@ class App extends Component {
       gps: [],
       output: [],
       data: workoutData.samples,
+      one: [],
+      five: [],
+      ten: [],
+      fifteen: [],
+      twenty: []
     }
   }
 
@@ -27,13 +32,35 @@ class App extends Component {
     return analysisData;
   }
 
-  getData = (timeParams) => {
+  determineTime = (name, topPerformance) => {
+    console.log(this.state[name])
+    if (!this.state[name].length) {
+      this.setState({ [name]: topPerformance });
+    }
+  }
+
+  havePerformace = (name, timeParams, analysisData) => {
+    if (this.state[name].length) {
+      const gps = this.setGPSData(timeParams, analysisData, this.state[name]);
+      const output = analysisData.performanceData(this.state[name]);
+      this.resetState(this.state[name], gps, output, this.state[name]);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getData = (timeParams, name) => {
     const { data } = this.state;
     const analysisData = this.createData(data, timeParams);
-    const topPerformance = analysisData.findBest(analysisData.timeSegments);
-    const gps = this.setGPSData(timeParams, analysisData, topPerformance)
-    const output = analysisData.performanceData(topPerformance);
-    this.resetState(topPerformance, gps, output);
+    const performaceInState = this.havePerformace(name, timeParams, analysisData);
+    if (!performaceInState) {
+      const topPerformance = analysisData.findBest(analysisData.timeSegments);
+      const timeState = this.determineTime(name, topPerformance);
+      const gps = this.setGPSData(timeParams, analysisData, topPerformance);
+      const output = analysisData.performanceData(topPerformance);
+      this.resetState(topPerformance, gps, output, timeState);
+    }
   }
 
   setGPSData = (timeParams, analysisData, topPerformance) => {
@@ -51,12 +78,12 @@ class App extends Component {
     this.setState({ 
       topPerformance, 
       gps,
-      output 
+      output, 
     });
   }
 
   componentDidMount () {
-    this.getData({mill: 1200000, second: 1200});
+    this.getData({mill: 1200000, second: 1200}, 'twenty');
   }
 
   render() {

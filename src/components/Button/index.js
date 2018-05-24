@@ -6,7 +6,7 @@ const Button = ({ controlFunc, value, name }) => {
   return(
     <div className='Button'>
       <button
-        onClick={(event) => controlFunc(value)}
+        onClick={(event) => controlFunc(value, name)}
       >
         { name }
       </button>
