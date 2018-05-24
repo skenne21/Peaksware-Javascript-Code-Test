@@ -9,7 +9,7 @@ class MapContainer extends Component {
   }
 
   componentDidUpdate() {
-    this.loadMap()
+    this.loadMap();
   }
 
   loadMap() {
@@ -40,7 +40,6 @@ class MapContainer extends Component {
   }
 
   render() {
-    console.log(this.props.gps)
     const style = { 
       width: '80vw', 
       height: '65vh', 

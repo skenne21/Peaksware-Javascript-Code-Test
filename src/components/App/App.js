@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import  TimeLabels from '../TimeLabels/';
 const  workoutData = require('../../cleaners/workout-data.json');
 
-
 class App extends Component {
   constructor() {
     super();
@@ -17,24 +16,35 @@ class App extends Component {
       topPerformance: [],
       gps: [],
       output: [],
-      data: workoutData.samples
+      data: workoutData.samples,
     }
   }
 
   createData = (data, timeParams) => {
     const exerciseData = data.slice(0, data.length);
-    const analysisData = new AnalysisData(timeParams.mill, timeParams.second);
+    const analysisData = new AnalysisData(timeParams.mill, timeParams.second, data);
     const segments = analysisData.spiltIntoTwentyMins(exerciseData);
     return analysisData;
   }
 
   getData = (timeParams) => {
-    const { data } = this.state
+    const { data } = this.state;
     const analysisData = this.createData(data, timeParams);
-    const gps = analysisData.gpsRoute(data);
     const topPerformance = analysisData.findBest(analysisData.timeSegments);
-    const output = analysisData.performanceData(topPerformance)
-    this.resetState(topPerformance, gps, output)
+    const gps = this.setGPSData(timeParams, analysisData, topPerformance)
+    const output = analysisData.performanceData(topPerformance);
+    this.resetState(topPerformance, gps, output);
+  }
+
+  setGPSData = (timeParams, analysisData, topPerformance) => {
+    const { onLoad } = timeParams;
+    let gps;
+    if (timeParams.onLoad) {
+      gps = analysisData.gpsRoute(topPerformance);
+    } else {
+      gps = analysisData.gpsRoute();
+    }
+    return gps;
   }
 
   resetState(topPerformance, gps, output) {
@@ -46,11 +56,12 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this.getData({mill: 1200000, second: 1200})
+    this.getData({mill: 1200000, second: 1200});
   }
 
   render() {
     const { topPerformance, gps, output } = this.state;
+
     return (
       <div className="App">
         <header className="App-header">
@@ -72,7 +83,10 @@ class App extends Component {
 
 App.propTypes = {
   google: PropTypes.object,
-  topPerformance: PropTypes.array
+  topPerformance: PropTypes.array,
+  gps: PropTypes.array,
+  output: PropTypes.array,
+  controlFunc: PropTypes.func
 };
 
-export default  GoogleApiWrapper({ apiKey: googleMapApiKey})(App) ;
+export default  GoogleApiWrapper({ apiKey: googleMapApiKey })(App);

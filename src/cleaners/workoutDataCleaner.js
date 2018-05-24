@@ -1,8 +1,10 @@
 class AnalysisData {
-  constructor(secondParams, minuteParams) {
+  constructor(secondParams, minuteParams, data) {
     this.timeSegments = [];
     this.secondsPast = secondParams;
     this.secondsPerMintue = minuteParams;
+    this.fullWorkoutData = data;
+
   }
 
   spiltIntoTwentyMins(workoutData) {
@@ -62,9 +64,7 @@ class AnalysisData {
     return topPerformance;
   }
 
-
-
-  gpsRoute = workoutData => {
+  gpsRoute = (workoutData = this.fullWorkoutData) => {
     const startPoint = workoutData.slice(5, workoutData.length);
     const gps = startPoint.map((second, index, array) => {
       let lat = second.values.positionLat;
